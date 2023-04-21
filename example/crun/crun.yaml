@@ -1,0 +1,19 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mixed-workload
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      runtimeClassName: crun-wasmedge
+      restartPolicy: Never
+      containers:
+        - name: wasm
+          image: wasm-workload:v0.1.0
+          resources: {}
+        - name: regular
+          image: index.docker.io/busybox
+          command: ["echo", "hello, regular :)"]
+          resources: {}
